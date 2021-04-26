@@ -3,7 +3,7 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from './componant/button/Button.jsx'
 import Cartes from "./componant/carte/Cartes";
-import Game from './componant/Play/Game.jsx'
+import Start from './componant/Play/Start.jsx'
 
 const cardArray = [
   "KS", "QS", "JS", "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "0S",
@@ -33,6 +33,9 @@ class Table extends React.Component {
       endGame: false,
       nameOfWinner: ""
     }
+  }
+  function() {
+
   }
 
   rndCarte() {
@@ -149,7 +152,7 @@ class Table extends React.Component {
   render() {
     if (this.state.startGame == false) {
       return (
-        <Game startGame={this.startGame} />
+        <Start startGame={this.startGame} />
       )
     } else {
       return (<div>
