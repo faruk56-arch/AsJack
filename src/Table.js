@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from './componant/button/Button.jsx'
 import Cartes from "./componant/carte/Cartes";
 import Start from './componant/Play/Start.jsx'
-import transformCardIntoInt from './utils/utils'
+import func from './utils/utils'
 
 const cardArray = [
   "KS", "QS", "JS", "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "0S",
@@ -31,10 +31,8 @@ class Table extends React.Component {
       nameOfWinner: ""
     }
   }
-  function() {
 
-  }
-
+  //rndCarte pour avoir les 52 carte randomly //
   rndCarte() {
     arrayLength = + this.state.playerCardList.length;
 
@@ -48,12 +46,14 @@ class Table extends React.Component {
   }
 
   onClickStop = () => {
+    //stocker les valeur de rndCarte//
     const cardSelectedDealer = this.rndCarte()
     const cardSelectedDealer2 = this.rndCarte()
 
-    const valueCarteDealer = transformCardIntoInt(cardSelectedDealer.split("")[0])
-    const valueCarteDealer2 = transformCardIntoInt(cardSelectedDealer2.split("")[0])
-
+    //Dans une variable stocker la function et dedans  cardSelectedDealer
+    const valueCarteDealer = func.transformCardIntoInt(cardSelectedDealer.split("")[0])
+    const valueCarteDealer2 = func.transformCardIntoInt(cardSelectedDealer2.split("")[0])
+    // ici je stock les 2 variable dans un table
     const cardsDealer = [cardSelectedDealer, cardSelectedDealer2]
 
     let dealerValue = valueCarteDealer + valueCarteDealer2
@@ -65,7 +65,7 @@ class Table extends React.Component {
 
     while (dealerValue < 17) {
       const cardSelectedDealer = this.rndCarte()
-      const valueCarteDealer = transformCardIntoInt(cardSelectedDealer.split("")[0])
+      const valueCarteDealer = func.transformCardIntoInt(cardSelectedDealer.split("")[0])
 
       cardsDealer.push(cardSelectedDealer)
 
@@ -111,7 +111,7 @@ class Table extends React.Component {
 
   onClickGive = () => {
     const cardSelected = this.rndCarte()
-    const valueCarte = transformCardIntoInt(cardSelected.split("")[0])
+    const valueCarte = func.transformCardIntoInt(cardSelected.split("")[0])
     const totalPlayerValue = this.state.counterPlayer + valueCarte
 
     this.setState({
@@ -120,16 +120,18 @@ class Table extends React.Component {
     })
   }
 
-  
+  //   La methode startGame envoyé à enfant Start.jsx comme un props
   startGame = () => {
     const cardSelected = this.rndCarte()
     const cardSelected2 = this.rndCarte()
-    
-    const valueCarte = transformCardIntoInt(cardSelected.split("")[0])
-    
-    const valueCarte2 = transformCardIntoInt(cardSelected2.split("")[0])
+
+    const valueCarte = func.transformCardIntoInt(cardSelected.split("")[0])
+
+    const valueCarte2 = func.transformCardIntoInt(cardSelected2.split("")[0])
 
     const firstPlayerValue = valueCarte + valueCarte2
+    console.log(firstPlayerValue);
+
 
     const firstTwoCardsPlayer = [cardSelected, cardSelected2]
 
@@ -141,7 +143,8 @@ class Table extends React.Component {
   }
 
   render() {
-    if (this.state.startGame == false) {
+    // Si start game
+    if (this.state.startGame === false) {
       return (
         <Start startGame={this.startGame} />
       )
@@ -149,14 +152,14 @@ class Table extends React.Component {
       return (<div>
 
         <div className="playGame">
-          <div style={{ height: '100vh', position: 'relative' }}>
+          <div style={{ height: '90vh', position: 'relative' }}>
             <h1 style={{ color: '#feb236', textAlign: 'center' }}>Black Jack</h1>
-            <Cartes key={"dealer"} cardList={this.state.dealerCardList} />
             {this.state.endGame && (<div className='winlost'>
+              <Cartes key={"dealer"} cardList={this.state.dealerCardList} />
               <h1>Winner is {this.state.nameOfWinner}</h1>
             </div>)}
-            <Cartes key={"player"} cardList={this.state.playerCardList} />
 
+            <Cartes key={"player"} cardList={this.state.playerCardList} />
             <div style={{ bottom: '20px', position: 'absolute' }} className="row col-6 offset-3 flex d-flex justify-content-between">
               <div className="d-grid gap-2">
                 <Button
