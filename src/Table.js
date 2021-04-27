@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from './componant/button/Button.jsx'
-import Cartes from "./componant/carte/Cartes";
 import Start from './componant/Play/Start.jsx'
-import func from './utils/utils'
+import func from './utils/utils';
+import Game from './componant/game'
 
 const cardArray = [
   "KS", "QS", "JS", "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "0S",
@@ -142,6 +141,8 @@ class Table extends React.Component {
     })
   }
 
+
+
   render() {
     // Si start game
     if (this.state.startGame === false) {
@@ -149,43 +150,15 @@ class Table extends React.Component {
         <Start startGame={this.startGame} />
       )
     } else {
-      return (<div>
-
-        <div className="playGame">
-          <div style={{ height: '90vh', position: 'relative' }}>
-            <h1 style={{ color: '#feb236', textAlign: 'center' }}>Black Jack</h1>
-            {this.state.endGame && (<div className='winlost'>
-              <Cartes key={"dealer"} cardList={this.state.dealerCardList} />
-              <h1>Winner is {this.state.nameOfWinner}</h1>
-            </div>)}
-
-            <Cartes key={"player"} cardList={this.state.playerCardList} />
-            <div style={{ bottom: '20px', position: 'absolute' }} className="row col-6 offset-3 flex d-flex justify-content-between">
-              <div className="d-grid gap-2">
-                <Button
-                  onClick={this.onClickGive}
-                  classe="btn btn-outline-warning btn-lg rounded-pill"
-                  color="white"
-                  bcolor="#0d6efd"
-                  name="Give"
-                />
-              </div>
-              <div>
-              </div>
-              <div className="d-grid gap-2">
-                <Button
-                  onClick={this.onClickStop}
-                  classe="btn btn-outline-warning btn-lg rounded-pill"
-                  color="white"
-                  bcolor="#dc3545"
-                  name="Stop"
-                />
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
+      return (
+        <Game
+          endGame={this.state.endGame}
+          onClickGive={this.onClickGive}
+          onClickStop={this.onClickStop}
+          dealerCardList={this.state.dealerCardList}
+          nameOfWinner={this.state.nameOfWinner}
+          playerCardList={this.state.playerCardList}
+        />
       )
     }
   }

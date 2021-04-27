@@ -11,7 +11,7 @@ class Cartes extends React.Component {
           function (carteFaceValue) {
             const url = "https://deckofcardsapi.com/static/img/" + carteFaceValue + "." + "png"
             return (
-              <img src={url}
+              <img alt="carte" src={url}
                 style={{ height: 150, width: 100 }} />
             )
           })}
